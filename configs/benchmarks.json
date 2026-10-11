@@ -1,0 +1,31 @@
+{
+  "name": "baseline-bilingual",
+  "generation": {
+    "max_tokens": 256,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "thinking": false
+  },
+  "prompts": [
+    {
+      "category": "general-qa",
+      "language": "en",
+      "prompt": "Explain transformer attention in three concise paragraphs."
+    },
+    {
+      "category": "code",
+      "language": "en",
+      "prompt": "Write a Python function that checks whether a string is a palindrome."
+    },
+    {
+      "category": "structured-extraction",
+      "language": "en",
+      "prompt": "Return JSON with name and year from: Ada Lovelace wrote the first algorithm in 1843."
+    },
+    {
+      "category": "general-qa",
+      "language": "el",
+      "prompt": "Εξήγησε με απλά λόγια τι είναι η κβαντοποίηση ενός γλωσσικού μοντέλου."
+    }
+  ]
+}

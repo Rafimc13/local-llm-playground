@@ -1,0 +1,23 @@
+[profiles.low-memory]
+context_length = 2048
+max_running_requests = 1
+gpu_memory_utilization = 0.65
+cpu_offload_gb = 0.0
+chunked_prefill_size = 1024
+enforce_eager = true
+
+[profiles.balanced]
+context_length = 4096
+max_running_requests = 2
+gpu_memory_utilization = 0.80
+cpu_offload_gb = 0.0
+chunked_prefill_size = 2048
+enforce_eager = false
+
+[profiles.offload-4b]
+context_length = 2048
+max_running_requests = 1
+gpu_memory_utilization = 0.70
+cpu_offload_gb = 2.0
+chunked_prefill_size = 512
+enforce_eager = true

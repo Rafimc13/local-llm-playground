@@ -1,0 +1,72 @@
+name: local-llm-playground
+
+services:
+  vllm:
+    profiles: ["vllm"]
+    image: ${VLLM_IMAGE:-vllm/vllm-openai:v0.11.0}
+    ipc: host
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${HF_CACHE_DIR:-~/.cache/huggingface}:/root/.cache/huggingface
+    environment:
+      HF_TOKEN: ${HF_TOKEN:-}
+    command:
+      - Qwen/Qwen3-0.6B
+      - --dtype
+      - float16
+      - --max-model-len
+      - "2048"
+      - --gpu-memory-utilization
+      - "0.80"
+      - --max-num-seqs
+      - "1"
+      - --max-num-batched-tokens
+      - "2048"
+      - --enforce-eager
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  sglang:
+    profiles: ["sglang"]
+    image: ${SGLANG_IMAGE:-lmsysorg/sglang:v0.4.10.post2-cu126}
+    ipc: host
+    ports:
+      - "30000:30000"
+    volumes:
+      - ${HF_CACHE_DIR:-~/.cache/huggingface}:/root/.cache/huggingface
+    environment:
+      HF_TOKEN: ${HF_TOKEN:-}
+    command:
+      - python3
+      - -m
+      - sglang.launch_server
+      - --model-path
+      - Qwen/Qwen3-0.6B
+      - --dtype
+      - float16
+      - --context-length
+      - "2048"
+      - --mem-fraction-static
+      - "0.65"
+      - --max-running-requests
+      - "1"
+      - --chunked-prefill-size
+      - "1024"
+      - --disable-cuda-graph
+      - --host
+      - 0.0.0.0
+      - --port
+      - "30000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

@@ -1,0 +1,7 @@
+.git
+.venv
+.cache
+models
+benchmark-results
+__pycache__
+*.pyc

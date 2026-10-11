@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors and local configuration
+.idea/
+.vscode/
+.env
+
+# Model and benchmark artifacts
+.cache/
+models/
+benchmark-results/
+*.gguf
+*.safetensors
+
+# Operating systems
+.DS_Store
+Thumbs.db

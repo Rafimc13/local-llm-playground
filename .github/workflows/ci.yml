@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install locked dependencies
+        run: uv sync --frozen --all-groups
+      - name: Run pre-commit
+        run: uv run pre-commit run --all-files
+      - name: Run basedpyright
+        run: uv run basedpyright
+      - name: Run CPU-only tests
+        run: uv run pytest -m "not integration and not gpu and not benchmark"
